@@ -1,6 +1,6 @@
 # //oneweek 2016 SolarChain
 
-[SolarChain diagram](https://raw.githubusercontent.com/tomconte/tomconte.github.io/master/images/ApolloChain.png)
+![SolarChain diagram](https://raw.githubusercontent.com/tomconte/tomconte.github.io/master/images/ApolloChain.png)
 
 The SolarChain system consists of:
 

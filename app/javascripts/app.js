@@ -36,15 +36,14 @@ function refreshBalance() {
 
 };
 
-function sendCoin() {
-  var meta = MetaCoin.deployed();
+function buyEnergy() {
+  var contract = SolarChain.deployed();
 
   var amount = parseInt(document.getElementById("amount").value);
-  var receiver = document.getElementById("receiver").value;
 
   setStatus("Initiating transaction... (please wait)");
 
-  meta.sendCoin(receiver, amount, {from: account}).then(function() {
+  contract.buyEnergy(amount, {from: account}).then(function() {
     setStatus("Transaction complete!");
     refreshBalance();
   }).catch(function(e) {

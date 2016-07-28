@@ -7,6 +7,11 @@ function setStatus(message) {
   status.innerHTML = message;
 };
 
+function log(message) {
+  var log = document.getElementById("log");
+  log.innerHTML += message + '<br/>';
+};
+
 function refreshBalance() {
   var contract = SolarChain.deployed();
 
@@ -14,7 +19,7 @@ function refreshBalance() {
 
   balance = web3.eth.getBalance(account);
   var balance_element = document.getElementById("balance");
-  balance_element.innerHTML = balance;
+  balance_element.innerHTML = web3.fromWei(balance, "finney");
 
   // ApolloCoin balance
   contract.getCoinAccount.call(account, {from: account}).then(function(value) {
@@ -45,7 +50,6 @@ function buyEnergy() {
 
   contract.buyEnergy(amount, {from: account}).then(function() {
     setStatus("Transaction complete!");
-    refreshBalance();
   }).catch(function(e) {
     console.log(e);
     setStatus("Error sending coin; see log.");
@@ -68,5 +72,16 @@ window.onload = function() {
     account = accounts[0];
 
     setInterval(refreshBalance, 1000);
+
+    // Setup contract event listeners
+
+    contract = SolarChain.deployed();
+    
+    var energySale = contract.EnergySale({fromBlock: 'latest'});
+    energySale.watch(function(error, result) {
+      var amount = result.args.amount;
+      var msg = "EnergySale " + amount + " from " + result.args.from;
+      log(msg);
+    });
   });
 }

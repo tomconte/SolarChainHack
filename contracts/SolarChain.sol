@@ -17,16 +17,24 @@ contract SolarChain {
         kWh_rate = rate;
     }
 
+    // Energy sale event 
+    event EnergySale(address indexed from, uint amount);
+
     // I am selling some energy; this will credit my account
     function sellEnergy(uint kwh) public {
         coinAccount[msg.sender] += (kwh * kWh_rate);
+        EnergySale(msg.sender, kwh);
     }
+
+    // Energy purchase event
+    event EnergyPurchase(address indexed from, uint amount);
 
     // I am buying some energy, thus crediting my energy account
     function buyEnergy(uint coin) {
         if (coinAccount[msg.sender] > coin) {
             coinAccount[msg.sender] -= coin;
             energyAccount[msg.sender] += (coin / kWh_rate);
+            EnergyPurchase(msg.sender, coin);
         }
     }
     

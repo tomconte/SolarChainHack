@@ -46,3 +46,18 @@ cd device-producer
 npm install
 truffle exec device-producer.js
 ```
+
+## How to run tests
+
+Install and run the Ethereum RPC client for testing and development:
+
+```
+npm install -g ethereumjs-testrpc
+testrpc
+```
+
+The default testrpc port 8545 matches the configuation in file `truffle.js` so tests should run with:
+
+```
+truffle test
+```
